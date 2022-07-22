@@ -15,8 +15,15 @@ function* zip(...iterables) {
     }
 }
 
+/** Safely Zip Up Iterable Objects
+ *
+ * Attempts were made to combat some potential pitfalls when dealing with iterables.
+ *
+ * @param ...iterables: objects that implement the Symbol.iterator function
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
+ */
 // An attempt to combat the potential pitfalls outlined below.
-function* zip(...iterables) {
+function* safeZip(...iterables) {
     function process(iterators, fakerable) {
         const values = [];
         for (let index = 0; index < iterators.length; ++index) {
