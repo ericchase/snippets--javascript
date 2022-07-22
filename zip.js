@@ -4,14 +4,37 @@
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
  */
 function* zip(...iterables) {
-    const iterators = iterables.map(iterable => iterable[Symbol.iterator]());
+    const iterators = iterables.map((iterable) => iterable[Symbol.iterator]());
     while (true) {
         let doneCount = 0;
         const values = iterators
-            .map(iterator => iterator?.next())
-            .map(next => next?.done ? (++doneCount, undefined) : next?.value);
+            .map((iterator) => iterator?.next())
+            .map((next) => (next?.done ? (++doneCount, undefined) : next?.value));
         if (doneCount === iterators.length) return;
         yield values;
+    }
+}
+
+// An attempt to combat the potential pitfalls outlined below.
+function* zip_safe(...iterables) {
+    const fakerable = { next: () => ({}) };
+    const iterators = iterables.map((iterable) => iterable[Symbol.iterator]());
+
+    let count = iterators.length;
+    const process = () =>
+        iterators
+            .map((iterator) => iterator?.next())
+            .map(({ done, value }, index) => {
+                if (!done) return value;
+                iterators.splice(index, 1, fakerable);
+                --count;
+                return undefined;
+            });
+
+    let values = process(iterators);
+    while (count > 0) {
+        yield values;
+        values = process(iterators);
     }
 }
 
