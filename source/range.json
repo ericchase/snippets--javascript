@@ -1,7 +1,7 @@
 {
     "range-integers": {
         "prefix": "range: integers",
-        "body": "[...Array($TM_SELECTED_TEXT$0).keys()]",
-        "description": "[...Array(<selected>).keys()]"
+        "body": "[...new Array($TM_SELECTED_TEXT$0).keys()]",
+        "description": "[...new Array(<selected>).keys()]"
     }
 }
