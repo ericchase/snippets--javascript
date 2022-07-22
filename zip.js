@@ -1,20 +1,3 @@
-/** Zip Up Iterable Objects
- *
- * @param ...iterables: objects that implement the Symbol.iterator function
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
- */
-function* zip(...iterables) {
-    const iterators = iterables.map((iterable) => iterable[Symbol.iterator]());
-    while (true) {
-        let doneCount = 0;
-        const values = iterators
-            .map((iterator) => iterator?.next())
-            .map((next) => (next?.done ? (++doneCount, undefined) : next?.value));
-        if (doneCount === iterators.length) return;
-        yield values;
-    }
-}
-
 /** Safely Zip Up Iterable Objects
  *
  * Attempts were made to combat some potential pitfalls when dealing with iterables.
@@ -22,7 +5,6 @@ function* zip(...iterables) {
  * @param ...iterables: objects that implement the Symbol.iterator function
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
  */
-// An attempt to combat the potential pitfalls outlined below.
 function* safeZip(...iterables) {
     function process(iterators, fakerable) {
         const values = [];
@@ -46,7 +28,24 @@ function* safeZip(...iterables) {
     }
 }
 
-/** Potential Pitfalls
+/** Zip Up Iterable Objects
+ *
+ * @param ...iterables: objects that implement the Symbol.iterator function
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
+ */
+function* zip(...iterables) {
+    const iterators = iterables.map((iterable) => iterable[Symbol.iterator]());
+    while (true) {
+        let doneCount = 0;
+        const values = iterators
+            .map((iterator) => iterator?.next())
+            .map((next) => (next?.done ? (++doneCount, undefined) : next?.value));
+        if (doneCount === iterators.length) return;
+        yield values;
+    }
+}
+
+/** Potential Pitfalls with unsafe Zip
  *
  *  All iterator protocol methods (next(), return(), and throw()) are expected to return an 
  *  object implementing the IteratorResult interface. It must have the following properties:
@@ -69,8 +68,7 @@ function* safeZip(...iterables) {
  *  level.
  */
 
-// Visual Studio Code snippet text
-/*
+/** Adding to Visual Studio Code snippets
     "function-zip": {
         "prefix": "function: zip",
         "body": [
