@@ -16,25 +16,26 @@ function* zip(...iterables) {
 }
 
 // An attempt to combat the potential pitfalls outlined below.
-function* zip_safe(...iterables) {
-    const fakerable = { next: () => ({}) };
-    const iterators = iterables.map((iterable) => iterable[Symbol.iterator]());
-
-    let count = iterators.length;
-    const process = () =>
-        iterators
-            .map((iterator) => iterator?.next())
-            .map(({ done, value }, index) => {
-                if (!done) return value;
+function* zip(...iterables) {
+    function process(iterators, fakerable) {
+        const values = [];
+        for (let index = 0; index < iterators.length; ++index) {
+            const next = iterators[index]?.next?.();
+            if (next && next?.done === true) {
                 iterators.splice(index, 1, fakerable);
-                --count;
-                return undefined;
-            });
-
-    let values = process(iterators);
-    while (count > 0) {
+                ++fakerable.count;
+            }
+            values.push(next?.value);
+        }
+        return values;
+    }
+    const fakerable = { count: 0, next: () => ({}) };
+    const iterators = iterables.map((iterable) =>
+        iterable?.[Symbol.iterator]?.() ?? (++fakerable.count, fakerable));
+    let values = process(iterators, fakerable);
+    while (fakerable.count < iterators.length) {
         yield values;
-        values = process(iterators);
+        values = process(iterators, fakerable);
     }
 }
 
