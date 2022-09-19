@@ -1,0 +1,18 @@
+{
+    "function-get-property-names": {
+        "prefix": "function: get property names",
+        "body": [
+            "function getPropertyNames(obj) {",
+            "    let props = Object.getOwnPropertyNames(obj);",
+            "    while (obj = Object.getPrototypeOf(obj)) {",
+            "        let names = Object.getOwnPropertyNames(obj);",
+            "        for (let i = 0; i < names.length; ++i)",
+            "            //if (props.indexOf(names[i]) === -1) // skip duplicates",
+            "                props.push(names[i]);",
+            "    }",
+            "    return props;",
+            "}"
+        ],
+        "description": "function getPropertyNames(obj) {"
+    }
+}
