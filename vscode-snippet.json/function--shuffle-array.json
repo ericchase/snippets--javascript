@@ -1,0 +1,16 @@
+{
+    "function--shuffle-array": {
+        "prefix": "function: shuffle array",
+        "body": [
+            "function shuffle(arr) {",
+            "    const shuffled = [...arr];",
+            "    for (let i = arr.length - 1; i >= 0; --i) {",
+            "        const j = Math.floor(Math.random() * i);",
+            "        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];",
+            "    }",
+            "    return shuffled;",
+            "}"
+        ],
+        "description": "function shuffle(arr) {"
+    }
+}

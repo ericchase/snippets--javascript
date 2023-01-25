@@ -1,0 +1,7 @@
+{
+    "make--integer-range": {
+        "prefix": "make: integer range",
+        "body": "[...new Array($TM_SELECTED_TEXT$0).keys()]",
+        "description": "[...new Array(<selected>).keys()]"
+    }
+}

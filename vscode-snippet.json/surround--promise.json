@@ -1,11 +1,11 @@
 {
-  "surround-promise": {
-    "prefix": "surround: promise",
-    "body": [
-      "return new Promise(async function(resolve, reject) {",
-      "    $TM_SELECTED_TEXT$0",
-      "});"
-    ],
-    "description": "return new Promise(async function(resolve, reject) {"
-  }
+	"surround--promise": {
+		"prefix": "surround: promise",
+		"body": [
+			"return new Promise((resolve, reject) => {",
+			"    $TM_SELECTED_TEXT$0",
+			"});"
+		],
+		"description": "return new Promise((resolve, reject) => {"
+	}
 }

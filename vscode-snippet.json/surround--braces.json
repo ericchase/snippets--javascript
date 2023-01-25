@@ -1,0 +1,7 @@
+{
+	"surround-braces": {
+		"prefix": "surround: braces",
+		"body": "{ $TM_SELECTED_TEXT$0 }",
+		"description": "{ <selected> }"
+	}
+}

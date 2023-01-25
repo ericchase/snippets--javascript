@@ -1,13 +1,13 @@
 {
-  "function-string-to-number": {
-    "prefix": "function: string to number",
-    "body": [
-      "function stringToNumber(str) {",
-      "    if (typeof str !== 'string' || str.trim().length === 0)",
-      "        return NaN;",
-      "    return Number(str.trim());",
-      "}"
-    ],
-    "description": "function stringToNumber(str) {"
-  }
+    "function--string-to-number": {
+        "prefix": "function: string to number",
+        "body": [
+            "function stringToNumber(str) {",
+            "    if (typeof str !== 'string' || str.trim().length === 0)",
+            "        return NaN;",
+            "    return Number(str.trim());",
+            "}"
+        ],
+        "description": "function stringToNumber(str) {"
+    }
 }
